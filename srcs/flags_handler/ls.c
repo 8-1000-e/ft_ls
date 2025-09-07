@@ -20,11 +20,6 @@ long    get_blocks_size(char **files)
     size = 0;
     while (*files)
     {
-        if (**files == '.')
-        {
-            files += 1;
-            continue;
-        }
         if (stat(*files, &file_stat) == 0)
             size += file_stat.st_blocks;
         files += 1;
@@ -32,13 +27,11 @@ long    get_blocks_size(char **files)
     return size;
 }
 
-void    make_lflag(char *file, char *base)
+void    make_lflag(char *file)
 {
     struct stat	file_stat;
     int filemod;
 
-    if ((file + ft_strlen(base))[0] == '.')
-        return ;
     if (!stat(file, &file_stat))
     {
     	if (S_ISDIR(file_stat.st_mode))
@@ -130,8 +123,8 @@ void    ls(t_data *data, char *base)
 	char **files;
     DIR *dir;
     struct dirent *entry;
-    (void)data;
 	
+
     files = NULL;
     dir = opendir(base);
     entry = readdir(dir);
@@ -140,16 +133,26 @@ void    ls(t_data *data, char *base)
 		ft_strapp(&files, ft_strjoin(base, entry->d_name));
         entry = readdir(dir);
     }
-    ft_printf(1, "total %d\n", get_blocks_size(files));
+	if (data->f_list->l)
+    	ft_printf(1, "total %d\n", get_blocks_size(files));
 	select_sort(&files, data);
 	while (*files)
 	{
-    	if ((*files + ft_strlen(base))[0] == '.' && !data->f_list.a)
-    	    continue ;
-		if (data->f_list.l)
-			make_lflag(*files++, base);
-		ft_printf(1, " %s\n", *files + ft_strlen(base));
+    	if ((*files + ft_strlen(base))[0] == '.' && !data->f_list->a)
+		{
+			files += 1;
+			continue ;
+		}
+		if (data->f_list->l)
+		{
+			make_lflag(*files);
+			ft_printf(1, " %s\n", *files + ft_strlen(base));
+		}
+		else
+			ft_printf(1, "%s ", *files + ft_strlen(base));
 		files += 1;
 	}
+	if (!data->f_list->l)
+		ft_printf(1, "\n");
     closedir(dir);
 }

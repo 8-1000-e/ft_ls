@@ -6,7 +6,7 @@
 /*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:51:24 by edubois-          #+#    #+#             */
-/*   Updated: 2025/09/07 21:53:18 by emile            ###   ########.fr       */
+/*   Updated: 2025/09/07 22:59:26 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
     char **flags;
 	char **folders;
 	char **files;
-	t_flags f_list;
+	t_flags *f_list;
 }	t_data;
 
 //get_flags.c

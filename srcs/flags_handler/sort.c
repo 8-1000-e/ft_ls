@@ -6,7 +6,7 @@
 /*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 20:09:24 by emile             #+#    #+#             */
-/*   Updated: 2025/09/07 21:49:37 by emile            ###   ########.fr       */
+/*   Updated: 2025/09/07 23:14:38 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	reverse_sort_char(char ***files)
 
 void	select_sort(char ***files, t_data *data)
 {
-	if (data->f_list.r)
+	if (data->f_list->r)
 		reverse_sort_char(files);
+	else
+		sort_char_tab(*files);
 }

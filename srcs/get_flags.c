@@ -6,7 +6,7 @@
 /*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:10:08 by edubois-          #+#    #+#             */
-/*   Updated: 2025/09/07 19:31:13 by emile            ###   ########.fr       */
+/*   Updated: 2025/09/07 23:00:31 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ void	fill_data(t_data *data)
 {
 	int i;
 
-	i = -1;
+ 	i = -1;
 	while (data->flags && data->flags[++i])
 	{
 		if (ft_strchr(data->flags[i], 'l'))
-			data->f_list.l = 1;
+			data->f_list->l = 1;
 		if (ft_strchr(data->flags[i], 'a'))
-			data->f_list.a = 1;
+			data->f_list->a = 1;
 		if (ft_strchr(data->flags[i], 'r'))
-			data->f_list.r = 1;
+			data->f_list->r = 1;
 		if (ft_strchr(data->flags[i], 'R'))
-			data->f_list.R = 1;
+			data->f_list->R = 1;
 		if (ft_strchr(data->flags[i], 't'))
-			data->f_list.t = 1;
+			data->f_list->t = 1;
 	}
 }
 
@@ -91,6 +91,9 @@ void    get_flags(int argc, char **argv, t_data *data)
     data->flags = NULL;
     data->folders = NULL;
     data->files = NULL;
+	data->f_list = (t_flags *)malloc(sizeof(t_flags));
+	if (!data->f_list)
+		return ;
     while (++i < argc)
     {
         if (check_args(argv[i]))
@@ -104,11 +107,4 @@ void    get_flags(int argc, char **argv, t_data *data)
     }
 	fill_data(data);
 	format_folders(data);
-	// printf("data :\n");
-	// printf("flags :\n");
-	// ft_print_array(data->flags);
-	// printf("folder :\n");
-	// ft_print_array(data->folders);
-	// printf("file :\n");
-	// ft_print_array(data->files);
 }
