@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edubois- <edubois-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:51:24 by edubois-          #+#    #+#             */
-/*   Updated: 2025/09/05 00:34:37 by edubois-         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:23:57 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,34 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 # include "../libft/printf_fd/ft_printf.h"
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
+# include <sys/stat.h>
+# include <sys/types.h>  
+# include <sys/types.h>    
+# include <pwd.h>    
+# include <uuid/uuid.h>
+# include <dirent.h>
+# include <grp.h>
+#include <sys/errno.h>
+#include <fcntl.h>
+# include <time.h>
+
+#define BASEROOT "."
 
 typedef struct s_data
 {
     char **flags;
+	char **folders;
+	char **files;
 }	t_data;
 
 //get_flags.c
 void    get_flags(int argc, char **argv, t_data *data);
 
 //handle_flag.c
-void    flag_l(t_data *data);
+void    flag_l(t_data *data, char *base);
 
 //flag_utils
 void    sort_char_tab(char **tab);
-
 
 
 #endif

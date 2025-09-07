@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_l.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edubois- <edubois-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:19:11 by edubois-          #+#    #+#             */
-/*   Updated: 2025/09/05 01:10:37 by edubois-         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:15:55 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ long    get_blocks_size(char **files)
             continue;
         }
         if (stat(*files, &file_stat) == 0)
-            size += (file_stat.st_blocks + 1) / 2;
+            size += file_stat.st_blocks;
         files += 1;
     }
     return size;
@@ -83,11 +83,50 @@ void    make_Lflag(char *file)
         ft_printf(1, "x");
     else
         ft_printf(1, "-");
+
+
+    ft_printf(1, " %d ", file_stat.st_nlink);
+
+    struct passwd *info;
+    info = getpwuid(file_stat.st_uid);
+    ft_printf(1, " %s", info->pw_name);
+
+    struct group *group;
+    group = getgrgid(file_stat.st_gid);
+    ft_printf(1, " %s", group->gr_name);
+
+    ft_printf(1, " %d", file_stat.st_size);
+
+    char *time_str = ctime(&file_stat.st_mtime);
+    
+    char day[3];
+    day[0] = time_str[8];
+    day[1] = time_str[9];
+    day[2] = '\0';
+    
+    char month[4];
+    month[0] = time_str[4];
+    month[1] = time_str[5];
+    month[2] = time_str[6];
+    month[3] = '\0';
+    
+    char time[6];
+    time[0] = time_str[11];
+    time[1] = time_str[12];
+    time[2] = time_str[13];
+    time[3] = time_str[14];
+    time[4] = time_str[15];
+    time[5] = '\0';
+
+    ft_printf(1, " %s", day);
+    ft_printf(1, " %s", month);
+    ft_printf(1, " %s", time);
+    
     ft_printf(1, " %s\n", file);
 }
 
 
-void    flag_l(t_data *data)
+void    flag_l(t_data *data, char *base)
 {
     char **files;
     DIR *dir;
@@ -95,7 +134,7 @@ void    flag_l(t_data *data)
     (void)data;
 
     files = NULL;
-    dir = opendir(".");
+    dir = opendir(base);
     entry = readdir(dir);
     while (entry)
     {
