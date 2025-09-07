@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edubois- <edubois-@student.42.fr>          +#+  +:+       +#+         #
+#    By: emile <emile@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/18 11:41:12 by edubois-          #+#    #+#              #
-#    Updated: 2025/09/05 00:30:12 by edubois-         ###   ########.fr        #
+#    Updated: 2025/09/07 21:53:18 by emile            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ LIBFT_LIB 		:= $(LIBFT_DIR)/libft.a
 
 SRCS 			=	srcs/main.c\
 					srcs/get_flags.c\
-					srcs/flags_handler/flag_l.c\
+					srcs/flags_handler/ls.c\
 					srcs/flags_handler/flag_utils.c\
+					srcs/flags_handler/sort.c\
 
 OBJS 			:= $(SRCS:.c=.o)
 

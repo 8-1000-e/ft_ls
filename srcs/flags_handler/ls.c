@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_l.c                                           :+:      :+:    :+:   */
+/*   ls.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:19:11 by edubois-          #+#    #+#             */
-/*   Updated: 2025/09/07 16:15:55 by emile            ###   ########.fr       */
+/*   Updated: 2025/09/07 21:52:57 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ long    get_blocks_size(char **files)
     return size;
 }
 
-void    make_Lflag(char *file)
+void    make_lflag(char *file, char *base)
 {
     struct stat	file_stat;
     int filemod;
 
-    if (*file == '.')
+    if ((file + ft_strlen(base))[0] == '.')
         return ;
     if (!stat(file, &file_stat))
     {
@@ -122,28 +122,34 @@ void    make_Lflag(char *file)
     ft_printf(1, " %s", month);
     ft_printf(1, " %s", time);
     
-    ft_printf(1, " %s\n", file);
 }
 
 
-void    flag_l(t_data *data, char *base)
+void    ls(t_data *data, char *base)
 {
-    char **files;
+	char **files;
     DIR *dir;
     struct dirent *entry;
     (void)data;
-
+	
     files = NULL;
     dir = opendir(base);
     entry = readdir(dir);
     while (entry)
     {
-        ft_strapp(&files, entry->d_name);
+		ft_strapp(&files, ft_strjoin(base, entry->d_name));
         entry = readdir(dir);
     }
     ft_printf(1, "total %d\n", get_blocks_size(files));
-    sort_char_tab(files);
-    while (*files)
-        make_Lflag(*files++);
+	select_sort(&files, data);
+	while (*files)
+	{
+    	if ((*files + ft_strlen(base))[0] == '.' && !data->f_list.a)
+    	    continue ;
+		if (data->f_list.l)
+			make_lflag(*files++, base);
+		ft_printf(1, " %s\n", *files + ft_strlen(base));
+		files += 1;
+	}
     closedir(dir);
 }
