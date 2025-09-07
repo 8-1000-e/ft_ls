@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edubois- <edubois-@student.42angouleme>    +#+  +:+       +#+        */
+/*   By: emile <emile@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:38:44 by edubois-          #+#    #+#             */
-/*   Updated: 2025/07/02 23:53:12 by edubois-         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:48:01 by emile            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_print_array(char **str)
 {
 	int	y;
 
+	if (!str)
+		return ;
 	y = 0;
 	while (str[y])
 	{
